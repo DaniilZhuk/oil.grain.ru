@@ -24,8 +24,7 @@ $is_admin = $user->is_admin;
                 <p class="number_bid">№ заявки: <?= Html::encode($this->title) ?></p>
                 <h1>Ценовой комитет №______ от <?= date('d-m-Y', strtotime($model->date_ck)); ?></h1>
         <?php
-
-             }   else {
+             }  else  {
         ?>
                  <h1>№ заявки: <?= Html::encode($this->title) ?></h1>
         <?php 
