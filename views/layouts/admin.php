@@ -54,20 +54,21 @@ AppAsset::register($this);
             
             ['label' => 'Отклики', 'url' => ['/admin/response']],
             ($userIsadmin == 1 or $userIsadmin == 2) ? (
-                ['label' => 'Архив заявок', 'url' => ['/admin/archive']]
-            ) : ( 
-                ''
-            ) ,
-            ($userIsadmin == 1 or $userIsadmin == 2) ? (
-                ['label' => 'Архив откликов', 'url' => ['/admin/archiveresponse']]
-            ) : ( 
-                ''
-            ) ,
-            ($userIsadmin == 1 or $userIsadmin == 2) ? (
                 ['label' => 'Заявки на доп. согл-ия', 'url' => ['/admin/ck']]
             ) : ( 
                 ''
             ) ,
+          
+            ($userIsadmin == 1 or $userIsadmin == 2) ? (
+                ['label' => 'Архивы', 'items' => [
+                    ['label' => 'Архив заявок', 'url' => ['/admin/archive']],
+                    ['label' => 'Архив откликов', 'url' => ['/admin/archiveresponse']],
+                    ['label' => 'Архив доп. соглашений', 'url' => ['/admin/archiveck']],
+                ]]
+            ) : ( 
+                ''
+            ) ,
+           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
