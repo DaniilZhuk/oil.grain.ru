@@ -57,7 +57,16 @@ class BidController extends Controller
             'user' => $user,
         ]);
     }
-
+    public function actionSigned($id_response, $id_bid)
+    {
+        $responses = Response::find()->where(['id' => $id_response])->one();
+        $responses->signed = 1;
+        if ( $responses->save()){
+            return $this->actionView($id_bid); 
+        } else {
+            var_dump("NOOOOOO");
+        }               
+    }
     /**
      * Displays a single Bid model.
      * @param int $id ID

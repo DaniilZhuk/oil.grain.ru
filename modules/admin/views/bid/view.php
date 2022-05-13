@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
                 <p class="number_bid">№ заявки: <?= Html::encode($this->title) ?></p>
                 <h1>Ценовой комитет №______ от <?= date('d-m-Y') ?></h1>
+               <a href="#" onClick="window.print()" class="btn btn-primary"> Распечатать </a>
         <?php
 
              }   else {
@@ -60,20 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
             if ($is_admin != 1 and $is_admin != 2)  {
                 echo Html::a('Оставить предложение', ['createbid', 'id_bid' => $model->id], ['class' => 'btn btn-primary']);
             }
-        } else {
-            if ($is_admin == 1 or $is_admin == 2)  {
-                //echo Html::a('Печать PDF', ['printbid', 'id_bid' => $model->id], ['class' => 'btn btn-primary']);
-               // echo Html::button('Button 3', [ 'class' => 'btn btn-primary', 'onclick' => '(function ( $event ) { $("body").print(/*options*/); })();' ]);
-                echo '  <a href="#" onClick="window.print()" class="btn btn-primary"> Распечатать </a>';
-                //   echo Html::a('<i class="fa far fa-hand-point-up"></i> Privacy Statement', ['/bid/printbid'], [
-                //     'class'=>'btn btn-danger', 
-                //     'target'=>'_blank', 
-                //     'data-toggle'=>'tooltip', 
-                //     'title'=>'Will open the generated PDF file in a new window'
-                // ]);
-
-            }
-        }
+        } 
+        
        
     ?>
        
@@ -132,16 +121,22 @@ $this->params['breadcrumbs'][] = $this->title;
             $user_inn = " ";
         }
       
-      
-    //   if ($agent==1) {
-    //       $agent = 'Агент';
-    //   } else {
-    //     $agent = 'Не агент';
-    //   }
-   
+        if ($signed==1) {
+            $display='display: none !important';
+        } else {
+            $display='display: block !important';
+        }      
 
       ?>
-      <div class="resp">
+
+        <?php
+            if ($is_admin == 1 or $is_admin == 2)  {
+        ?>
+            <div class="resp"  style="<?= $display ?>" >
+        <?php } else { ?>
+            <div class="resp"  >
+        <?php }  ?>
+        
           <!-- <b>Объем:</b>   <?= $response->volume ?><br> -->
         <div class="resp11"><b>Цена:</b>  <?= $response->price ?></div>
         <div class="resp11"><b>Срок поставки:</b><br> с <?= $response->date_start ?><br>  по <?= $response->date_end ?> </div>
@@ -154,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="resp11"><b>Наименование поставщика:</b><br>  <?= $response->company ?></div>            
             <div class="resp11"><b>ФИО:</b><br>  <?= Html::a($user, ['/admin/user/view', 'id' => $user_id], ['class' => 'a_fio'])?> (<?= $agent ?>) </div>
             <div class="resp11"><b>ИНН:</b><br>  <?=   $user_inn ?></div>          
-            
+            <?php echo Html::a('В архив', ['signed', 'id_response' => $response->id,'id_bid' => $model->id], ['class' => 'btn btn-primary otr']); ?> 
             <!-- <?php  if ($signed == 1) { ?>
                 <input type="checkbox" name="chek[]" checked value="<?= $response->id ?>" >
             <?php   } else {  ?>
@@ -187,8 +182,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
         <?php ActiveForm::end(); ?>
-        <script>
-$('#add_otkl input:checkbox:checked').each(function(){
-alert($(this).val());
-});
-        </script>
+<script>
+// $('#add_otkl input:checkbox:checked').each(function(){
+// alert($(this).val());
+// });
+</script>

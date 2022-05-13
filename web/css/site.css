@@ -1,7 +1,6 @@
 .navbar-collapse{
     flex-grow: 0;
 }
-
 table{
     display: block;
     width: 100%;
@@ -247,7 +246,21 @@ body{
     border-bottom: 5px solid #007bff;
     margin: 10px 0px;
     padding: 10px;
-
+    position: relative;
+}
+.otr{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.resp19{
+    float: left;
+    width: 100%;
+    height: 50px;
+    background: #37ff00;
+    font-size: 30px;
+    color: white;
+    text-align: center;
 }
 .resp11{
     width: 15%;

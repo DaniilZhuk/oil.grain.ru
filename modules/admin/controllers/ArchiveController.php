@@ -74,7 +74,16 @@ class ArchiveController extends Controller
            // 'dates'=> $dates,
         ]);
     }
-
+    public function actionReturnsigned($id_response, $id_bid)
+    {
+        $responses = Response::find()->where(['id' => $id_response])->one();
+        $responses->signed = 0;
+        if ( $responses->save()){
+            return $this->actionView($id_bid); 
+        } else {
+            var_dump("NOOOOOO");
+        }   
+    }
     /**
      * Displays a single Archive model.
      * @param int $id ID
