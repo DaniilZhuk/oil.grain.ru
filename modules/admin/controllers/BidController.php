@@ -100,20 +100,15 @@ class BidController extends Controller
 
     public function actionSendMail()
     {
-         // отправка всем пользователям уведомлений ОТ СЮДА 
-        //  $usersNoAdmin = User::find()->where(['is_admin' => !1])->andWhere(['is_admin' => !2])->orderBy('id')->all();
-        //  foreach($usersNoAdmin as $user)
-        //  { 
-             Yii::$app->mailer->compose()
-             ->setFrom('info@oil.grain.ru')
-             ->setTo(['daniil10i@mail.ru','info@it-vector.com', 'it.team.zhuchenko@yandex.ru'])
-             ->setSubject('Новая заявка №')
-             ->setTextBody('Появилась новая заявка!')
-             ->setHtmlBody('<b><a href="/admin/bid"> ПОСМОТРЕТЬ </a> </b>')
-             ->send();
-        //  } 
-        //  var_dump('STOP');die;
-         // ДО СЮДА
+        
+        Yii::$app->mailer->compose()
+        ->setFrom('info@oil.grain.ru')
+        ->setTo(['daniil10i@mail.ru','info@it-vector.com', 'it.team.zhuchenko@yandex.ru'])
+        ->setSubject('Новая заявка №')
+        ->setTextBody('Появилась новая заявка!')
+        ->setHtmlBody('<b><a href="/admin/bid"> ПОСМОТРЕТЬ </a> </b>')
+        ->send();
+       
     }
 
     public function actionCreateBids()
@@ -124,16 +119,14 @@ class BidController extends Controller
         while ($c >= 1) {
             while ($v >= 1) {
                 $model = new Bid();
-                $model->basis = self::countBasis($c);
-                $model->volume = self::countVolume($v);
+                $model->basis = Bid::countBasis($c);
+                $model->volume = Bid::countVolume($v);
                 $model->price = '105';
                 $model->nomenclature = ['Масло подсолнечное нерафинированное промышленной переработки / Масло подсолнечное нерафинированное первого сорта'];
                 $model->end_date = date('Y-m-d 14:00:00'); //  date('Y-m-d 14:00:00')
                 $v--;
                 $model->save();
-                // echo '<pre>';
-                // var_dump($model->basis, $model->volume );
-                // echo '</pre>';
+               
             }
             $v = 5;
             $c--;
@@ -155,33 +148,7 @@ class BidController extends Controller
 
         return $this->redirect(['index']);
     }
-    public function countVolume($v)
-    {
-        if ($v == 5) {
-            $volume = '1 000';
-        } elseif ($v == 4) {
-            $volume  = '500';
-        } elseif ($v == 3) {
-            $volume  = '300';
-        } elseif ($v == 2) {
-            $volume  = '200';
-        } elseif ($v == 1) {
-            $volume  = '100';
-        }
-        return $volume;
-    }
-    public function countBasis($c)
-    {
-        if ($c == 3) {
-            $company  = 'ЮР Лабинский МЭЗ ф-л, ООО (Краснодарский кр., г.Лабинск, ул.Красная, 100)';
-        } elseif ($c == 2) {
-            $company = 'ОАО "МЖК Краснодарский" (г. Краснодар. ул. Тихорецкая 5)';
-        } elseif ($c == 1) {
-            $company  = 'Юг Руси, АО (г. Ростов-на-Дону, ул. Луговая, 9)';
-            
-        }
-        return $company;
-    }
+   
 
     /**
      * Updates an existing Bid model.

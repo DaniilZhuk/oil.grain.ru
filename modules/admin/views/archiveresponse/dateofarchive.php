@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="bid-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-  
+
 
 
     <?= GridView::widget([
@@ -27,23 +27,46 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'tableOptions' => [
         //     'class' => 'table2'
         // ],
-        'summary'=> false,
+        'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
-            'price',
-           //'id_bid',
+            [
+                'class' => ActionColumn::className(),
+                // {view} {update} {delete}
+                'template' => '{delete}',
+                'visibleButtons' => [
+                    'update' => function ($data) {
+                        $userId = Yii::$app->user->getId();
+                        $user = User::find()->where(['id' => $userId])->one();
+                        $is_admin = $user->is_admin;
+                        // var_dump($is_admin);die;
+                        return ($is_admin == 1 or $is_admin == 2);
+                    },
+                    'delete' => function ($data) {
+                        $userId = Yii::$app->user->getId();
+                        $user = User::find()->where(['id' => $userId])->one();
+                        $is_admin = $user->is_admin;
+                        // var_dump($is_admin);die;
+                        return $is_admin == 1 or $is_admin == 2;
+                    },
+                ]
+            ],
+            //'id',
+
+            //'id_bid',
             [
                 'attribute' => 'id_bid',
                 'format' => 'raw',
-                'value' => function($model){
-                    $url = "http://oil.grain.ru/admin/bid/view?id=".$model->id_bid;             
+                'value' => function ($model) {
+                    $url = "http://oil.grain.ru/admin/bid/view?id=" . $model->id_bid;
                     return Html::a($model->id_bid, $url);
                     //return Html::a($model->name, Url::to(['категория/', 'param1' => $model->url, 'param2' => '.html']));
                 },
             ],
+            'price',
             'volume',
-            'logistic',
+            'company',
+
             //'date_start',
             [
                 'attribute' => 'date_start',
@@ -55,33 +78,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' =>  ['date', 'dd.MM.Y'],
                 'options' => ['width' => '200']
             ],
+            'logistic',
             // 'date_end',
             'bid.basis',
             'user.fio',
-            'company',
+
             'user.inn',
             'comment',
-            [
-                'class' => ActionColumn::className(),
-                // {view} {update} {delete}
-                'template' => '{delete}',
-                'visibleButtons' => [
-                    'update' => function($data) { 
-                        $userId = Yii::$app->user->getId();
-                        $user = User::find()->where(['id'=>$userId])->one();
-                        $is_admin = $user->is_admin;
-                       // var_dump($is_admin);die;
-                        return ($is_admin == 1 or $is_admin == 2) ; 
-                    },
-                    'delete' => function($data) { 
-                        $userId = Yii::$app->user->getId();
-                        $user = User::find()->where(['id'=>$userId])->one();
-                        $is_admin = $user->is_admin;
-                       // var_dump($is_admin);die;
-                        return $is_admin == 1 or $is_admin == 2 ; 
-                    },
-                ]
-            ],
+
         ],
     ]); ?>
 

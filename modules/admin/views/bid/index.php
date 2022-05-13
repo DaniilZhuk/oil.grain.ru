@@ -48,16 +48,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function($data) { 
                         $userId = Yii::$app->user->getId();
                         $user = User::find()->where(['id'=>$userId])->one();
+                        
                         $is_admin = $user->is_admin;
                        // var_dump($is_admin);die;
-                        return $is_admin == 1 ; 
+                       return ($is_admin == 1 or $is_admin == 2); 
                     },
                     'delete' => function($data) { 
                         $userId = Yii::$app->user->getId();
                         $user = User::find()->where(['id'=>$userId])->one();
                         $is_admin = $user->is_admin;
                        // var_dump($is_admin);die;
-                        return $is_admin == 1 ; 
+                       return ($is_admin == 1 or $is_admin == 2);
                     },
                 ]
             ],

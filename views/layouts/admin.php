@@ -52,7 +52,7 @@ AppAsset::register($this);
             ['label' => 'Личный кабинет', 'url' => ['/admin/user']],
             ['label' => 'Заявки', 'url' => ['/admin/bid']],
             
-            ['label' => 'Отклики', 'url' => ['/admin/response']],
+           //  ['label' => 'Отклики', 'url' => ['/admin/response']],
             ($userIsadmin == 1 or $userIsadmin == 2) ? (
                 ['label' => 'Заявки на доп. согл-ия', 'url' => ['/admin/ck']]
             ) : ( 

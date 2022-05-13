@@ -81,5 +81,33 @@ class Bid extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Response::class, ['id_bid' => 'id'])->count();
     }
+
+    public static function countVolume($v)
+    {
+        if ($v == 5) {
+            $volume = '1 000';
+        } elseif ($v == 4) {
+            $volume  = '500';
+        } elseif ($v == 3) {
+            $volume  = '300';
+        } elseif ($v == 2) {
+            $volume  = '200';
+        } elseif ($v == 1) {
+            $volume  = '100';
+        }
+        return $volume;
+    }
+    public static function countBasis($c)
+    {
+        if ($c == 3) {
+            $company  = 'ЮР Лабинский МЭЗ ф-л, ООО (Краснодарский кр., г.Лабинск, ул.Красная, 100)';
+        } elseif ($c == 2) {
+            $company = 'ОАО "МЖК Краснодарский" (г. Краснодар. ул. Тихорецкая 5)';
+        } elseif ($c == 1) {
+            $company  = 'Юг Руси, АО (г. Ростов-на-Дону, ул. Луговая, 9)';
+            
+        }
+        return $company;
+    }
     
 }
